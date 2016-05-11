@@ -71,11 +71,7 @@ type styleKey struct {
 
 // keyFromSub creates a style key containing the style info of the subtitle.
 func keyFromSub(s *Subtitle) (k styleKey) {
-	pos := s.Pos
-	if pos == PosNotSpecified {
-		pos = Bottom // Assign default position
-	}
-	k.Pos = modelPosToSsaPos[pos]
+	k.Pos = int(s.Pos)
 
 	color := s.Color
 
@@ -136,13 +132,19 @@ func WriteSsaTo(w io.Writer, sp *SubsPack) (err error) {
 		if _, ok := stylesMap[styleKeys[i]]; !ok {
 			// new style
 			styles = append(styles, styleKeys[i])
-			stylesMap[styleKeys[i]] = strconv.Itoa(len(styles))
+			stylesMap[styleKeys[i]] = strconv.Itoa(styleKeys[i].Pos)
 		}
 	}
 	// Now generate style definitions
 	for _, v := range styles {
-		wr.prf("Style: %s, Arial,28,%d,%d,%d,-2147483640,-1,0,1,1,2,%d,30,30,30,0,0",
-			stylesMap[v], v.Color, v.Color, v.Color, v.Pos)
+		if stylesMap[v] == "2" {
+			wr.prf("Style: %s, STHeiti,32,%d,%d,%d,-2147483640,-1,0,1,1,2,%d,30,30,10,0,0",
+				stylesMap[v], v.Color, v.Color, v.Color, v.Pos)
+		} else if stylesMap[v] == "10" {
+			wr.prf("Style: %s, Arial,40,%d,%d,%d,-2147483640,-1,0,1,1,2,%d,30,30,60,0,0",
+				stylesMap[v], v.Color, v.Color, v.Color, 2)
+		}
+
 		wr.prn()
 	}
 

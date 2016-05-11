@@ -97,12 +97,6 @@ func (sp *SubsPack) Concatenate(sp2 *SubsPack, secPartStart time.Duration) {
 //
 // Useful if 2 different subtitles are to be displayed at the same time, e.g. 2 different languages.
 func (sp *SubsPack) Merge(sp2 *SubsPack) {
-	// Put our subtitles to bottom:
-	sp.SetPos(PosNotSpecified)
-
-	// Put other subtitles to the top:
-	sp2.SetPos(Top)
-
 	// Append:
 	sp.Subs = append(sp.Subs, sp2.Subs...)
 
