@@ -135,11 +135,9 @@ func WriteSsaTo(w io.Writer, sp *SubsPack) (err error) {
 	// Now generate style definitions
 	for _, v := range styles {
 		if stylesMap[v] == "2" {
-			wr.prf("Style: %s, STHeiti,32,%d,%d,%d,-2147483640,-1,0,1,1,2,%d,30,30,10,0,0",
-				stylesMap[v], v.Color, v.Color, v.Color, v.Pos)
+			wr.prf("Style: 2, PingFang SC,30,15724527,15724527,&H40000004,&H40000004,0,0,1,3,0,2,30,30,4,0,0")
 		} else if stylesMap[v] == "10" {
-			wr.prf("Style: %s, Arial,40,%d,%d,%d,-2147483640,-1,0,1,1,2,%d,30,30,60,0,0",
-				stylesMap[v], v.Color, v.Color, v.Color, 2)
+			wr.prf("Style: 10, Helvetica Neue,32,15724527,15724527,&H40000004,&H40000004,0,0,1,3,0,2,30,30,42,0,0")
 		}
 
 		wr.prn()
