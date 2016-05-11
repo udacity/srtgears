@@ -109,10 +109,7 @@ func WriteSsaTo(w io.Writer, sp *SubsPack) (err error) {
 
 	// Script Info section
 	wr.prn("[Script Info]") // This must be the first line
-	wr.prn("; This is a Sub Station Alpha v4 script.")
-	wr.prn("; ", HomePage)
-	wr.prn("Title: ")
-	wr.prn("Script Updated By: Srtgears")
+	wr.prn("Title:")
 	wr.prn("ScriptType: v4.00")
 	wr.prn("Collisions: Normal")
 	wr.prn("PlayResY: 600")
