@@ -108,11 +108,11 @@ func (sp *SubsPack) Merge(sp2 *SubsPack) {
 	// Output container
 	merged := make([]*Subtitle, numSubs)
 
-	// Pointers for iteration
-	i, p1, p2 := 0, 0, 0
+	// Indicies for iteration
+	p1, p2 := 0, 0
 
-	// Step through to do a stable merge sort
-	for i < numSubs {
+	// Step through to do a stable merge
+	for i := 0; i < numSubs; i++ {
 		if p1 < l1 && sp.Subs[p1].TimeIn <= sp2.Subs[p2].TimeIn {
 			merged[i] = sp.Subs[p1]
 			p1++
@@ -120,7 +120,6 @@ func (sp *SubsPack) Merge(sp2 *SubsPack) {
 			merged[i] = sp2.Subs[p2]
 			p2++
 		}
-		i++
 	}
 
 	// Write results back into sp
