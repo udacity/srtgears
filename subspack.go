@@ -97,11 +97,35 @@ func (sp *SubsPack) Concatenate(sp2 *SubsPack, secPartStart time.Duration) {
 //
 // Useful if 2 different subtitles are to be displayed at the same time, e.g. 2 different languages.
 func (sp *SubsPack) Merge(sp2 *SubsPack) {
-	// Append:
-	sp.Subs = append(sp.Subs, sp2.Subs...)
-
-	// And sort
+	// Make sure inputs are properly ordered
 	sp.Sort()
+	sp2.Sort()
+
+	// Guards to prevent null pointer access
+	l1 := len(sp.Subs)
+	numSubs := l1 + len(sp2.Subs)
+
+	// Output container
+	merged := make([]*Subtitle, numSubs)
+
+	// Pointers for iteration
+	i, p1, p2 := 0, 0, 0
+
+	// Step through to do a stable merge sort
+	for i < numSubs {
+		if p1 < l1 && sp.Subs[p1].TimeIn <= sp2.Subs[p2].TimeIn {
+			merged[i] = sp.Subs[p1]
+			p1++
+		} else {
+			merged[i] = sp2.Subs[p2]
+			p2++
+		}
+		i++
+	}
+
+	// Write results back into sp
+	sp.Subs = make([]*Subtitle, numSubs)
+	copy(sp.Subs, merged)
 }
 
 // Split splits this SubsPack into 2 at the specified time.
