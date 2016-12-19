@@ -7,11 +7,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/icza/srtgears"
-	"github.com/icza/srtgears/exec"
 	"os"
 	"path"
 	"strings"
+
+	"github.com/udacity/srtgears"
+	"github.com/udacity/srtgears/exec"
 )
 
 var Version = "dev" // Srtgears version, filled by build

@@ -11,11 +11,12 @@ package exec
 import (
 	"flag"
 	"fmt"
-	"github.com/icza/srtgears"
 	"io"
 	"regexp"
 	"strconv"
 	"time"
+
+	"github.com/udacity/srtgears"
 )
 
 // Executor is a helper type of which you can execute subtitle transformations defined by a series of arguments.
