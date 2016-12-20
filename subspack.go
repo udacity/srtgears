@@ -103,7 +103,8 @@ func (sp *SubsPack) Merge(sp2 *SubsPack) {
 
 	// Guards to prevent null pointer access
 	l1 := len(sp.Subs)
-	numSubs := l1 + len(sp2.Subs)
+	l2 := len(sp2.Subs)
+	numSubs := l1 + l2
 
 	// Output container
 	merged := make([]*Subtitle, numSubs)
@@ -113,12 +114,22 @@ func (sp *SubsPack) Merge(sp2 *SubsPack) {
 
 	// Step through to do a stable merge
 	for i := 0; i < numSubs; i++ {
-		if p1 < l1 && sp.Subs[p1].TimeIn <= sp2.Subs[p2].TimeIn {
-			merged[i] = sp.Subs[p1]
-			p1++
-		} else {
-			merged[i] = sp2.Subs[p2]
-			p2++
+		if p1 < l1 && p2 < l2 { // Both subpacks have subtitles left
+			if sp.Subs[p1].TimeIn <= sp2.Subs[p2].TimeIn { // Compare the timestamps
+				merged[i] = sp.Subs[p1]
+				p1++
+			} else {
+				merged[i] = sp2.Subs[p2]
+				p2++
+			}
+		} else { // One of the subpacks has been fully copied over
+			if p1 < l1 { // Finish copying the subpack with subtitles left
+				merged[i] = sp.Subs[p1]
+				p1++
+			} else {
+				merged[i] = sp2.Subs[p2]
+				p2++
+			}
 		}
 	}
 
